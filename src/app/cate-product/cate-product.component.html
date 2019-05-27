@@ -1,0 +1,32 @@
+<app-list-cate-product></app-list-cate-product>
+
+<div class="container mt-2">
+  <div class="content">
+    <form class="form-inline">
+      <input [(ngModel)] = "search" type="text" class="form-control ml-auto" placeholder="Search" name="search">
+    </form>
+    <!-- Marketing Icons Section -->
+    <div class="row">
+      <div class="col-lg-3 mb-4 text-center text-white"  *ngFor="let pro of cateproductList | stringfilter: search | paginate: { itemsPerPage:8, currentPage: p }">
+          <div class="card h-100" [routerLink]="['/product-detail',pro.idShoes]">
+              <a><img class="card-img-top" src="{{pro.ShoesImg}}"></a>
+              <div class="card-img-overlay">
+                <div class="title-text">
+                
+                </div>
+              </div>
+              <div class="card-footer text-dark">
+                <p style="font-size: 65%">{{pro.ShoesColor}}</p>
+                <h6><b>{{pro.ShoesName}}</b></h6>
+                <p style="font-size: 80%">{{pro.ShoesPrice}}$</p>
+              </div>
+            </div> 
+      </div>           
+    </div>
+    <pagination-controls (pageChange)="p =$event" class="my-pagination text-center"></pagination-controls>
+  </div>
+</div>
+
+
+  
+

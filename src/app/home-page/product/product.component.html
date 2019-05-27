@@ -1,0 +1,24 @@
+<div class="container">
+  <hr>
+  <h2 class="my-4 text-center mt-4">NEW RELEASES</h2>
+  <hr>
+<!-- Marketing Icons Section -->
+<div class="row">
+  <div class="col-lg-3 mb-4 text-center text-white"  *ngFor="let pro of productList">
+      <div class="card h-100" [routerLink]="['/product-detail',pro.idShoes]">
+          <a><img class="card-img-top" src="{{pro.ShoesImg}}"></a>
+          <div class="card-img-overlay">
+            <div class="title-text">
+            
+            </div>
+          </div>
+          <div class="card-footer text-dark">
+            <p style="font-size: 65%">{{pro.ShoesColor}}</p>
+            <h6><b>{{pro.ShoesName}}</b></h6>
+            <p style="font-size: 80%">{{pro.ShoesPrice}}$</p>
+          </div>
+        </div> 
+  </div>      
+</div>
+</div>
+

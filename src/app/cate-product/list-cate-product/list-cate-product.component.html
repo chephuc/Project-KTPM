@@ -1,0 +1,10 @@
+
+<div class="sidebar" >
+  <a *ngFor="let cate of categoryList">
+      <a class="category" [routerLink]="['/cate-product',cate.idcategory]">{{cate.CategoryName}}</a>
+  </a>
+</div>
+
+
+
+
