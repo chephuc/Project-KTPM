@@ -6,5 +6,10 @@ export interface Product{
     ShoesColor: string
 }
 
+export interface Size{
+    idSize: number;
+    Size: string;
+}
+
 
  

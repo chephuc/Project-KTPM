@@ -32,95 +32,22 @@
               </a>
             </li>
           </ul>
+          <!-- <ul class="navbar-nav mr-auto">
+
+          </ul> -->
           <ul class="navbar-nav ml-auto">
-
-            <!-- <li>
-                <div class="input-group" style="margin-top: -3px">
-                    <input type="text" class="form-control" placeholder="Search" name="search">
-                  <div class="input-group-btn" style="margin-top: 1px">
-                    <button class="btn-search" type="submit">
-                      <i class="fa fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-            </li> -->
-
-            <li>
-              
-              <!-- Sign-up -->
-              <!-- Button to open the modal -->
-              <!-- onclick="document.getElementById('id01').style.display='block'" -->
-              <a  class="nav-link" routerLink="/register"><span class="fa fa-user"></span> Sign Up</a>
-          
-              <!-- The Modal (contains the Sign Up form) -->
-              <!-- <div id="id01" class="modal">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal"></span>
-                <form class="modal-content-signup animate" action="/action_page.php">
-                  <div class="container-sign-up">
-                    <h1>Sign Up</h1>
-                    <p>Please fill in this form to create an account.</p>
-                    <hr>
-                    <label for="email"><b>Email</b></label>
-                    <input type="text" placeholder="Enter Email" name="email" required>
-          
-                    <label for="psw"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="psw" required>
-          
-                    <label for="psw-repeat"><b>Repeat Password</b></label>
-                    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-          
-                    <label>
-                      <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-                    </label>
-          
-                    <p>By creating an account you agree to our <a href="#" style="color:rgb(4, 46, 87)">Terms & Privacy</a>.</p>
-          
-                    <div class="clearfix">
-                      <button type="submit" class="signup btn btn-lg btn-secondary">Sign Up</button>
-                      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn btn btn-lg btn-secondary">Cancel</button>
-                    </div>
-                  </div>
-                </form>
-              </div> -->
-
+              <li >
+                  <a *ngIf="!auth.isLoggedIn()" class="nav-link" routerLink="/register"><span class="fa fa-user"></span> Register</a>
+              </li>
+              <li>
+                  <a *ngIf="!auth.isLoggedIn()" class="nav-link" routerLink="/signin"><span class="fa fa-user"></span> Login</a>
+              </li>
+              <li>
+                <a *ngIf="auth.isLoggedIn()" class="nav-link active" href=""><span class="fa fa-user-circle"></span> Hello {{auth?.getUserDetails()?.UsersName}}</a>
             </li>
             <li>
-
-              <!-- Login -->
-              <!-- onclick="document.getElementById('id02').style.display='block'" -->
-              <!-- <a class="nav-link" routerLink=""><span class="fa fa-sign-in"></span> Login</a> -->
-              <app-login-status></app-login-status>
-
-              <!-- <div id="id02" class="modal">
-  
-                  <form class="modal-content-login animate" action="/action_page.php">
-                    <div class="imgcontainer">
-                      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal"></span>
-                      <img src="assets/images/user_icon.png" alt="Avatar" class="avatar">
-                    </div>
-                
-                    <div class="container-sign-up">
-                      <label for="uname"><b>Username</b></label>
-                      <input type="text" placeholder="Enter Username" name="uname" required>
-                
-                      <label for="psw"><b>Password</b></label>
-                      <input type="password" placeholder="Enter Password" name="psw" required>
-                        
-                      <label>
-                        <input type="checkbox" checked="checked" name="remember"> Remember me
-                      </label>
-                    
-                
-                      <div class="clearfix">
-                        <button type="submit" class="signup btn btn-lg btn-secondary">Login</button>
-                        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn btn btn-lg btn-secondary">Cancel</button>
-                        <br>
-                        <span class="psw">Forgot <a href="#">password?</a></span>
-                      </div>
-                    </div>
-                  </form>
-                </div> -->
-              </li>
+                <a *ngIf="auth.isLoggedIn()" (click)="auth.logOut()" class="nav-link" routerLink=""><span class="fa fa-sign-out"></span> Logout</a>
+            </li>     
           </ul>
         </div>
       </div>

@@ -5,6 +5,8 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import {CartService} from '../cart/cart.service';
 import {Observable} from 'rxjs';
 import {Product} from '../home-page/product/product';
+import { AuthGuardService } from '../auth-guard.service';
+import { AuthenticationService, UserDetails } from '../authentication.service'
 
 @Component({
   selector: 'app-navbar',
@@ -19,7 +21,9 @@ export class NavbarComponent implements OnInit {
   constructor(
     private data: CategoryService,
     public location: Location,
-    private cartService: CartService
+    private cartService: CartService,
+    private authguard: AuthGuardService,
+    private auth: AuthenticationService
   ) {  
     this.shoppingCartItems$ = this
       .cartService

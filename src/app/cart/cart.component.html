@@ -10,7 +10,7 @@
             </div>
             <div class="card-body">
                     <!-- PRODUCT -->
-                    <div class="row mt-1 border pt-2 pb-2 ml-2 mr-2" *ngFor="let item of shoppingCartItems">
+                    <div class="row mt-1 border pt-2 pb-2 ml-2 mr-2" *ngFor="let item of shoppingCartItems ; let i = index">
                         <div class="col-12 col-sm-12 col-md-2 text-center">
                                 <img class="cart-img" [src]="item.ShoesImg" alt="prewiew" width="120" height="80">
                         </div>
@@ -18,6 +18,10 @@
                             <h6><a class="text-dark" [routerLink]="['/product-detail',item.idShoes]"><b>{{item.ShoesName}}</b></a></h6>
                             <p style="font-size: 80%">{{item.ShoesColor}}</p>
                             <h6 class="mt-2"><b>{{item.ShoesPrice}}$</b></h6>
+                            <!-- <select name="state" class="select2" id="select2" [(ngModel)]="Selected">
+                                <option *ngFor="let size of shoppingCartSize" [value]="size.Size">{{size.Size}}</option>
+                            </select> -->
+                            <p>Size: {{shoppingCartSize[i]}}</p>
                         </div>
                         <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right">
                             <!-- <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px"> -->

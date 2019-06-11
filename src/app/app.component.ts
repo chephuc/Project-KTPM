@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from './authentication.service';
+import { AuthGuardService } from './auth-guard.service'
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'project';
+  constructor(public auth:AuthenticationService, public authguard: AuthGuardService){
+    
+  }
 }

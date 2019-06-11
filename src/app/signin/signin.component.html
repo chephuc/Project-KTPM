@@ -1,9 +1,9 @@
 <div class="container" style="margin-top: 20px; margin-bottom: 97px">
-  <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="signinForm" (ngSubmit)="login()">
     <div class="form-group">
 			<label for="username">User Name</label>
-			<input type="text" class="form-control" id="username" placeholder="Enter User name" 
-      formControlName="username" >
+			<input type="text" class="form-control" id="username" placeholder="Enter Username" 
+      formControlName="username" [(ngModel)]="credentials.UsersName">
       <div *ngIf="f.username.invalid && (f.username.dirty || f.username.touched)" >
 			  <small class="form-text text-danger" >User Name is required</small>
 			</div>
@@ -11,12 +11,12 @@
     <div class="form-group">
 			<label for="password">Password</label>
 			<input type="password" class="form-control" id="password" placeholder="Enter Password" 
-      formControlName="password" >
+      formControlName="password" [(ngModel)]="credentials.UsersPassword">
       <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)" >
 			  <small class="form-text text-danger">Password is required</small>
 			</div>
     </div>
-    <button type="submit" class="btn btn-primary" [disabled]="!signinForm.valid">Sign in</button>
+    <button type="submit" class="btn btn-primary">Log in</button>
   </form>
 </div>
 

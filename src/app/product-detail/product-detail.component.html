@@ -18,7 +18,7 @@
     <div class="product-configuration">
 
       <!-- Product Color -->
-      <div class="product-color">
+      <!-- <div class="product-color">
         <span>Color</span>
 
         <div class="color-choose">
@@ -36,19 +36,23 @@
           </div>
         </div>
 
-      </div>
+      </div> -->
 
       <!-- Cable Configuration -->
       <div class="cable-config">
         <span>Size Chart</span>
 
-        <div class="cable-choose">
-          <button>41</button>
-          <button>42</button>
-          <button>43</button>
-          <button>44</button>
-          <button>45</button>
+        <!-- <div class="cable-choose">
+          <div *ngFor="let size of productSize" style="display: inline-block; margin-right: 2px">
+              <button>{{size.Size}}</button>
+          </div>
+        </div> -->
+        <div>
+          <select name="state" class="select2" id="select2" [(ngModel)]="Selected">
+            <option *ngFor="let size of productSize" [value]="size.Size">{{size.Size}}</option>
+          </select>
         </div>
+
 
         <a href="#">How to configurate your Shoes</a>
       </div>
@@ -57,7 +61,7 @@
     <!-- Product Pricing -->
     <div class="product-price">
       <span>{{productList.ShoesPrice}}$</span>
-      <a (click)="addToCart(productList)" class="btn btn-secondary text-white">Add to cart</a>
+      <a (click)="addToCart(productList,Selected)" class="btn btn-secondary text-white">Add to cart</a>
     </div>
   </div>
 </div>

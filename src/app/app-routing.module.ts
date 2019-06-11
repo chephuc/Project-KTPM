@@ -13,7 +13,8 @@ import { BestSellerComponent } from './home-page/best-seller/best-seller.compone
 import { ContractComponent } from './contract/contract.component';
 import { CartComponent } from './cart/cart.component';
 import { CateProductComponent } from './cate-product/cate-product.component';
-import { ListCateProductComponent } from './cate-product/list-cate-product/list-cate-product.component';
+import { AdminComponent } from './admin/admin.component';
+import { AdminShoesComponent } from './admin/admin-shoes/admin-shoes.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/homepage' },
@@ -30,6 +31,8 @@ const routes: Routes = [
   { path: 'best-seller',component:BestSellerComponent},
   { path: 'cate-product',component:CateProductComponent},
   { path: 'cate-product/:id',component:CateProductComponent},
+  { path: 'admincategory',component:AdminComponent},
+  { path: 'adminshoes',component:AdminShoesComponent},
   // { path: 'binding', component: DemoBindingComponent, canActivate:[AuthGuard]},
   { path: '**', pathMatch: 'full', redirectTo: '/homepage' }
 ];

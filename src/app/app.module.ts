@@ -22,6 +22,10 @@ import { CateProductModule } from './cate-product/cate-product.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProductService } from './home-page/best-seller/best-seller.service';
 import { CartService } from './cart/cart.service';
+import { AuthenticationService } from './authentication.service';
+import { AuthGuardService } from './auth-guard.service';
+import { AdminModule } from './admin/admin.module';
+import { AdminService } from './admin/admin.service';
 
 @NgModule({
   declarations: [
@@ -34,20 +38,21 @@ import { CartService } from './cart/cart.service';
     LoginStatusComponent,
     ContractComponent,
     CartComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     HomePageModule,
+    AdminModule,
     CateProductModule,
     ReactiveFormsModule,
     NgxPaginationModule,
     FormsModule
   ],
 
-  providers: [UserService, ProductService, CartService],
+  providers: [UserService, ProductService, CartService, AuthenticationService,AuthGuardService, AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

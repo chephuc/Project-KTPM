@@ -1,0 +1,59 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="container mt-2">
+    <div class="content">
+        <form class="form-inline">
+            <input [(ngModel)]="search" type="text" class="form-control ml-auto mr-2" placeholder="Search" name="search">
+            <button type="button" class="btn btn-dark mb-3" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </form>
+        <div class="row mt-1 border pt-2 pb-2 ml-2 mr-2" *ngFor="let pro of productList | stringfilter: search | paginate: { itemsPerPage:8, currentPage: p }">
+            <div class="col-sm-2 text-center">
+                <img class="cart-img" src="{{pro.ShoesImg}}" alt="prewiew" width="110" height="90">
+            </div>
+            <div class="text-sm-center col-sm-9 text-md-left mt-2">
+                <h6><a class="text-dark" [routerLink]="['/product-detail',pro.idShoes]">{{pro.ShoesName}}</a></h6>
+                <h6>{{pro.ShoesColor}}</h6>
+                <h6>{{pro.ShoesPrice}}$</h6>
+            </div>
+            <div class="col-sm-1 text-sm-center text-md-right">
+                <button type="button" class="btn btn-outline-danger btn-xs ml-auto">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <pagination-controls (pageChange)="p =$event" class="my-pagination text-center"></pagination-controls>
+
+        <!-- The Modal -->
+        <div class="modal" id="myModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Shoes</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form #f="ngForm" (ngSubmit)="add(f.value)">
+                            <div class="form-group">
+                                <label for="Name">Name</label>
+                                <input ngModel type="text" class="form-control" id="ShoesName" placeholder="Enter Shoes Name" name="ShoesName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Color">Color</label>
+                                <input ngModel type="text" class="form-control" id="ShoesColor" placeholder="Enter Shoes Color" name="ShoesColor" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Price</label>
+                                <input ngModel type="text" class="form-control" id="ShoesPrice" placeholder="Enter Shoes Price" name="ShoesPrice" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>                     
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
