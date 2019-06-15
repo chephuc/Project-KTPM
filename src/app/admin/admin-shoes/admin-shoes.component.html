@@ -9,13 +9,16 @@
             <div class="col-sm-2 text-center">
                 <img class="cart-img" src="{{pro.ShoesImg}}" alt="prewiew" width="110" height="90">
             </div>
-            <div class="text-sm-center col-sm-9 text-md-left mt-2">
+            <div class="text-sm-center col-sm-8 text-md-left mt-2">
                 <h6><a class="text-dark" [routerLink]="['/product-detail',pro.idShoes]">{{pro.ShoesName}}</a></h6>
                 <h6>{{pro.ShoesColor}}</h6>
                 <h6>{{pro.ShoesPrice}}$</h6>
             </div>
-            <div class="col-sm-1 text-sm-center text-md-right">
-                <button type="button" class="btn btn-outline-danger btn-xs ml-auto">
+            <div class="col-sm-2 text-sm-center text-md-right">
+                <button type="button" class="btn btn-outline-info btn-xs mr-2">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-xs ml-auto" (click)="delete(pro.idShoes)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                 </button>
             </div>
@@ -35,18 +38,53 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form #f="ngForm" (ngSubmit)="add(f.value)">
+                        <div class="picture-container">
+                            <div class="picture">
+                                <img src="../../assets/images/image-select-default.png" class="picture-src" id="wizardPicturePreview" title="">
+                                <input formenctype="multipart/form-data" name="Image"
+                                    type="file" accept="image/*" id="wizard-picture" class="">
+                            </div>
+                            <h6 style="margin-top: 20px;" class="">Choose Picture</h6>
+                        
+                        </div>
+                        <form #f="ngForm" (ngSubmit)="add(newProduct)">
                             <div class="form-group">
                                 <label for="Name">Name</label>
-                                <input ngModel type="text" class="form-control" id="ShoesName" placeholder="Enter Shoes Name" name="ShoesName" required>
+                                <input [(ngModel)]="newProduct.ShoesName" type="text" class="form-control" id="ShoesName" placeholder="Enter Shoes Name" name="ShoesName" required>
                             </div>
                             <div class="form-group">
                                 <label for="Color">Color</label>
-                                <input ngModel type="text" class="form-control" id="ShoesColor" placeholder="Enter Shoes Color" name="ShoesColor" required>
+                                <input [(ngModel)]="newProduct.ShoesColor" type="text" class="form-control" id="ShoesColor" placeholder="Enter Shoes Color" name="ShoesColor" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">Price</label>
-                                <input ngModel type="text" class="form-control" id="ShoesPrice" placeholder="Enter Shoes Price" name="ShoesPrice" required>
+                                <input [(ngModel)]="newProduct.ShoesPrice" type="text" class="form-control" id="ShoesPrice" placeholder="Enter Shoes Price" name="ShoesPrice" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Img">Img</label>
+                                <input [(ngModel)]="newProduct.ShoesImg" type="text" class="form-control" id="ShoesImg" placeholder="Enter Shoes Image" name="ShoesImg" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <ng-select class="custom" [items]="categoryList"
+                                    bindLabel="CategoryName"
+                                    bindValue="idcategory"
+                                    [multiple]="false"
+                                    [searchable] = "false"
+                                    [(ngModel)]="newProduct.idcategory"
+                                    [ngModelOptions]="{standalone: true}">
+                                </ng-select>
+                            </div>
+                            <div class="form-group">
+                                <label for="Type">Type</label>
+                                <ng-select class="custom" [items]="typeList"
+                                    bindLabel="typeName"
+                                    bindValue="idtype"
+                                    [multiple]="false"
+                                    [(ngModel)]="newProduct.idtype"
+                                    [searchable] = "false"
+                                    [ngModelOptions]="{standalone: true}">
+                                </ng-select>
                             </div>
                             <button type="submit" class="btn btn-primary">Add</button>
                         </form>                     
