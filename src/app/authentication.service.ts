@@ -12,6 +12,7 @@ export interface UserDetails{
     UsersEmail: string
     UsersAddress: string
     UsersPhoneNum: number
+    UsersPermission: string
     exp: number
     iat: number
 }
@@ -27,6 +28,8 @@ export interface TokenPayload{
     UsersEmail: string
     UsersAddress: string
     UsersPhoneNum: number
+    UsersPermission: string
+
 }
 
 @Injectable()

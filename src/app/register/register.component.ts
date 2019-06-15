@@ -20,7 +20,8 @@ export class RegisterComponent implements OnInit {
     UsersPassword: '',
     UsersEmail: '',
     UsersAddress: '',
-    UsersPhoneNum: 0
+    UsersPhoneNum: 0,
+    UsersPermission: ''
   }
   constructor(private fb: FormBuilder, private service: UserService, private router:Router,private auth: AuthenticationService) { }
   registerForm:FormGroup;
