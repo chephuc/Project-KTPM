@@ -18,12 +18,25 @@ export class AdminTypeComponent implements OnInit {
   newType: any ={
     typeName: '',
   }
-
+  isAddForm: boolean;
+  typeBeforeUpdate: any;
 
   ngOnInit() {
     this.adminService.getType().subscribe(data => this.typeList = data)
   }
 
+  pushDataToForm(type: Type) {
+    this.isAddForm = false;
+    this.newType = JSON.parse(JSON.stringify(type));
+    this.typeBeforeUpdate = JSON.parse(JSON.stringify(this.newType));
+  }
+  onOpenAddFormClick() {
+    this.isAddForm = true;
+
+    this.newType = {
+      typeName: "",
+    };
+  }
   addType(type: Type) {
     this.adminService.addType(type).subscribe(
       (res) => {
@@ -50,5 +63,29 @@ export class AdminTypeComponent implements OnInit {
         alert("Failed!")
       }
     )
+  }
+
+  updateType(type: Type) {
+    if (!type.typeName) {
+      type.typeName = "NULL";
+    } 
+
+    this.adminService.updateType(type).subscribe(
+      (res) => {
+        alert("Success!")
+        this.router.navigateByUrl("/admintype")
+        this.adminService.getType().subscribe(data => this.typeList = data);
+      },
+      err => {
+        console.log(err)
+        alert("Failed!")
+      })
+  }
+  onSubmit(type: Type) {
+    if (this.isAddForm) {
+      this.addType(type)
+    } else {
+      this.updateType(type)
+    }
   }
 }

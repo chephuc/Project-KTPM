@@ -34,6 +34,9 @@ export class AdminService {
     public deleteType(id: number): Observable<Type> {
       return this.http.get<Type>("http://localhost:8000/api/type/delete/" + id);
     }
+    public updateType(type: Type): Observable<any>{
+      return this.http.post<any>("http://localhost:8000/api/type/update",type);
+    }
     //CATEGORY
     public getCategory(): Observable<Category[]>{
       return this.http.get<Category[]>('http://localhost:8000/api/category/');
@@ -44,7 +47,9 @@ export class AdminService {
     public deleteCategory(id: number): Observable<Category> {
       return this.http.get<Category>("http://localhost:8000/api/category/delete/" + id);
     }
-
+    public updateCategory(category: Category): Observable<any>{
+      return this.http.post<any>("http://localhost:8000/api/category/update",category);
+    }
 
     public uploadAvatarImage(file : FormData) : Observable<UploadEntity>{
       return this.http.post<UploadEntity>(`http://localhost:8000/upload`,file);

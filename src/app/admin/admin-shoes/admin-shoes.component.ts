@@ -122,7 +122,7 @@ export class AdminShoesComponent implements OnInit {
     this.adminService.updateShoes(shoes).subscribe(
       (res) => {
         alert("Success!")
-        window.location.replace('/adminshoes');
+        this.router.navigateByUrl("/adminshoes")
         this._service.getProducts().subscribe(data => this.productList = data);
       },
       err => {
