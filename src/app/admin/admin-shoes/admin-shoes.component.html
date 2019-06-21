@@ -3,7 +3,7 @@
     <div class="content">
         <form class="form-inline">
             <input [(ngModel)]="search" type="text" class="form-control ml-auto mr-2" placeholder="Search" name="search">
-            <button type="button" class="btn btn-dark mb-3" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <button type="button" class="btn btn-dark mb-3" data-toggle="modal" data-target="#myModal" (click)="onOpenAddFormClick()"><i class="fa fa-plus" aria-hidden="true"></i></button>
         </form>
         <div class="row mt-1 border pt-2 pb-2 ml-2 mr-2" *ngFor="let pro of productList | stringfilter: search | paginate: { itemsPerPage:8, currentPage: p }">
             <div class="col-sm-2 text-center">
@@ -15,7 +15,7 @@
                 <h6>{{pro.ShoesPrice}}$</h6>
             </div>
             <div class="col-sm-2 text-sm-center text-md-right">
-                <button type="button" class="btn btn-outline-info btn-xs mr-2">
+                <button type="button" class="btn btn-outline-info btn-xs mr-2" (click)=insertDataToForm(pro) data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-edit" aria-hidden="true"></i>
                 </button>
                 <button type="button" class="btn btn-outline-danger btn-xs ml-auto" (click)="delete(pro.idShoes)">
@@ -24,6 +24,11 @@
             </div>
         </div>
         <pagination-controls (pageChange)="p =$event" class="my-pagination text-center"></pagination-controls>
+
+        <!-- <form action="http://localhost:8000/upload" method="post" formenctype="multipart/form-data">
+             <input type="file" name="photo" />
+             <input type="submit" value="upload"> 
+        </form> -->
 
         <!-- The Modal -->
         <div class="modal" id="myModal">
@@ -41,13 +46,13 @@
                         <div class="picture-container">
                             <div class="picture">
                                 <img src="../../assets/images/image-select-default.png" class="picture-src" id="wizardPicturePreview" title="">
-                                <input formenctype="multipart/form-data" name="Image"
+                                <input formenctype="multipart/form-data" name="Image"  [(ngModel)]="newProduct.ShoesImg" (change)="onFileChangeEvent($event)"
                                     type="file" accept="image/*" id="wizard-picture" class="">
                             </div>
                             <h6 style="margin-top: 20px;" class="">Choose Picture</h6>
                         
                         </div>
-                        <form #f="ngForm" (ngSubmit)="add(newProduct)">
+                        <form #f="ngForm" (ngSubmit)="onSubmit(newProduct,files)">
                             <div class="form-group">
                                 <label for="Name">Name</label>
                                 <input [(ngModel)]="newProduct.ShoesName" type="text" class="form-control" id="ShoesName" placeholder="Enter Shoes Name" name="ShoesName" required>
@@ -60,11 +65,11 @@
                                 <label for="email">Price</label>
                                 <input [(ngModel)]="newProduct.ShoesPrice" type="text" class="form-control" id="ShoesPrice" placeholder="Enter Shoes Price" name="ShoesPrice" required>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="Img">Img</label>
                                 <input [(ngModel)]="newProduct.ShoesImg" type="text" class="form-control" id="ShoesImg" placeholder="Enter Shoes Image" name="ShoesImg" required>
-                            </div>
-                            <div class="form-group">
+                            </div> -->
+                            <!-- <div class="form-group">
                                 <label for="category">Category</label>
                                 <ng-select class="custom" [items]="categoryList"
                                     bindLabel="CategoryName"
@@ -74,22 +79,24 @@
                                     [(ngModel)]="newProduct.idcategory"
                                     [ngModelOptions]="{standalone: true}">
                                 </ng-select>
+                            </div> -->
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select [(ngModel)]="newProduct.idcategory" name="category" id="category" class="form-control">
+                                    <option selected></option>
+                                    <option *ngFor="let cate of categoryList" value="{{cate.idcategory}}">{{cate.CategoryName}}</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <label for="Type">Type</label>
-                                <ng-select class="custom" [items]="typeList"
-                                    bindLabel="typeName"
-                                    bindValue="idtype"
-                                    [multiple]="false"
-                                    [(ngModel)]="newProduct.idtype"
-                                    [searchable] = "false"
-                                    [ngModelOptions]="{standalone: true}">
-                                </ng-select>
+                                <label for="type">Type</label>
+                                <select [(ngModel)]="newProduct.idtype" name="type" id="type" class="form-control">
+                                    <option selected></option>
+                                    <option *ngFor="let type of typeList" value="{{type.idtype}}">{{type.typeName}}</option>
+                                </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Add</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>                     
                     </div>
-
                 </div>
             </div>
         </div>

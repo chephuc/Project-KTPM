@@ -15,9 +15,40 @@ export class AdminTypeComponent implements OnInit {
 
   }
   typeList: Type[];
+  newType: any ={
+    typeName: '',
+  }
+
 
   ngOnInit() {
     this.adminService.getType().subscribe(data => this.typeList = data)
   }
 
+  addType(type: Type) {
+    this.adminService.addType(type).subscribe(
+      (res) => {
+        this.router.navigateByUrl('/admintype')
+        this.adminService.getType().subscribe(data => this.typeList = data)
+        alert("Success!")
+      },
+      err => {
+        console.log(err)
+        alert("Failed!")
+      }
+    )
+  }
+
+  deleteType(id: number){
+    this.adminService.deleteType(id).subscribe(
+      (res) => {
+        this.router.navigateByUrl("/admintype")
+        this.adminService.getType().subscribe(data => this.typeList = data);
+        alert("Success!")
+      },
+      err => {
+        console.log(err)
+        alert("Failed!")
+      }
+    )
+  }
 }
