@@ -5,6 +5,7 @@ import { AdminService } from '../admin.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Category } from '../../navbar/category';
 import * as $ from "jquery";
+import * as bootstrap from "bootstrap"
 
 @Component({
   selector: 'app-admin-shoes',
