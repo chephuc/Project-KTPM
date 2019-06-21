@@ -17,12 +17,29 @@ export class AdminComponent implements OnInit {
   categoryList: Category[]
 
   newCategory: any ={
-    categoryName: '',
+    CategoryName: '',
   }
+  isAddForm: boolean;
+  categoryBeforeUpdate: any;
 
   ngOnInit() {
     this.adminService.getCategory().subscribe(data => this.categoryList = data)
   }
+
+  pushDataToForm(category: Category) {
+    this.isAddForm = false;
+    this.newCategory = JSON.parse(JSON.stringify(category));
+    this.categoryBeforeUpdate = JSON.parse(JSON.stringify(this.newCategory));
+  }
+ 
+  onOpenAddFormClick() {
+    this.isAddForm = true;
+
+    this.newCategory = {
+      CategoryName: "",
+    };
+  }
+
   addCategory(category: Category) {
     this.adminService.addCategory(category).subscribe(
       (res) => {
@@ -49,4 +66,29 @@ export class AdminComponent implements OnInit {
       }
     )
   }
+
+  updateCategory(category: Category) {
+    if (!category.CategoryName) {
+      category.CategoryName = "NULL";
+    } 
+
+    this.adminService.updateCategory(category).subscribe(
+      (res) => {
+        alert("Success!")
+        this.router.navigateByUrl("/admincategory")
+        this.adminService.getCategory().subscribe(data => this.categoryList = data);
+      },
+      err => {
+        console.log(err)
+        alert("Failed!")
+      })
+  }
+  onSubmit(category: Category) {
+    if (this.isAddForm) {
+      this.addCategory(category)
+    } else {
+      this.updateCategory(category)
+    }
+  }
+
 }
