@@ -19,6 +19,13 @@ export interface UserDetails{
 
 interface TokenResponse{
     token: string
+    permission: string
+    UsersName: string
+    UsersPassword: string
+    UsersEmail: string
+    UsersAddress: string
+    UsersPhoneNum: number
+    UsersPermission: string
 }
 
 export interface TokenPayload{
@@ -35,6 +42,7 @@ export interface TokenPayload{
 @Injectable()
 export class AuthenticationService {
     private token: string
+
     constructor(private http:HttpClient, private router: Router){
        
     }
@@ -88,6 +96,7 @@ export class AuthenticationService {
 
         const request = base.pipe(
             map((data: TokenResponse)=>{
+                data.permission == "admin" ? this.router.navigateByUrl('/adminshoes') : this.router.navigateByUrl('/homepage')
                 if(data.token){
                     this.saveToken(data.token)
                 }

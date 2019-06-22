@@ -26,7 +26,7 @@ export class SigninComponent implements OnInit {
   login(){
     this.auth.login(this.credentials).subscribe(
       () =>{
-        this.router.navigateByUrl('/homepage')
+        
       },
       err =>{
         console.log(err)

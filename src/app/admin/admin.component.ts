@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from '../navbar/category'
 import { AdminService } from './admin.service'
-
+import { AuthenticationService } from '../authentication.service';
+import { AuthGuardService } from '../auth-guard.service'
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -11,7 +12,7 @@ import { AdminService } from './admin.service'
 })
 export class AdminComponent implements OnInit {
 
-  constructor(private adminService: AdminService, private router:Router) {
+  constructor(private adminService: AdminService, private router:Router,private authguard: AuthGuardService,private auth: AuthenticationService) {
 
   }
   categoryList: Category[]
@@ -24,6 +25,8 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.adminService.getCategory().subscribe(data => this.categoryList = data)
+    
+    console.log("user",this.auth.getUserDetails().UsersName)
   }
 
   pushDataToForm(category: Category) {

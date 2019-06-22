@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Product, Size } from '../home-page/product/product';
 import { BehaviorSubject, Observable, Subject, Subscriber, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -10,7 +11,7 @@ export class CartService {
   private itemsInCart: Product[] = [];
   private sizeInCart: Size[] = [];
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.itemsInCartSubject.subscribe(_ => this.itemsInCart = _);
     this.sizeInCartSubject.subscribe(_ => this.sizeInCart = _);
   }
@@ -51,7 +52,7 @@ export class CartService {
     return this.sizeInCartSubject.asObservable();
   }
 
-  public getTotalAmount(): Observable<number> {
+  public getTotalAmount(): Observable<any> {
     return this.itemsInCartSubject.pipe(map((items: Product[]) => {
       return items.reduce((prev, curr: Product) => {
         return prev + curr.ShoesPrice;
@@ -63,5 +64,13 @@ export class CartService {
     const currentItems = [...this.itemsInCart];
     const itemsWithoutRemoved = currentItems.filter(_ => _.idShoes !== item.idShoes);
     this.itemsInCartSubject.next(itemsWithoutRemoved);
+  }
+
+  public addOrder(order: any): Observable<any>{
+    return this.http.post<any>("http://localhost:8000/api/order/add",order);
+  }
+
+  public updateDetail(detail: any): Observable<any>{
+    return this.http.post<any>("http://localhost:8000/api/detail/update",detail);
   }
 }
