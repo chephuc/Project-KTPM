@@ -17,7 +17,7 @@ export class AdminComponent implements OnInit {
   categoryList: Category[]
 
   newCategory: any ={
-    CategoryName: '',
+    CategoryName: "",
   }
   isAddForm: boolean;
   categoryBeforeUpdate: any;
