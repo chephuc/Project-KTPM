@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../home-page/product/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Product, Size } from '../home-page/product/product';
 import { Observable, of } from 'rxjs';
 import { CartService } from './cart.service';
@@ -18,23 +18,24 @@ export class CartComponent implements OnInit {
   public shoppingCartItems$: Observable<Product[]> = of([]);
   public shoppingCartItems: Product[] = [];
   public shoppingCartSize: Size[] = [];
-  Selected: Number; 
+  Selected: Number;
   total: any;
+  totalPrice: number
+  size: number
 
-  constructor(private cartService: CartService,private authguard: AuthGuardService,private auth: AuthenticationService) { 
+  constructor(private cartService: CartService, private authguard: AuthGuardService, private auth: AuthenticationService, private router: Router) {
     this.shoppingCartItems$ = this
-    .cartService
-    .getItems();
+      .cartService
+      .getItems();
 
     this.shoppingCartSize$ = this
-    .cartService
-    .getSize();
+      .cartService
+      .getSize();
 
     this.shoppingCartItems$.subscribe(_ => this.shoppingCartItems = _);
     this.shoppingCartSize$.subscribe(_ => this.shoppingCartSize = _);
-    // console.log(this.shoppingCartSize)
+    console.log(this.shoppingCartSize)
     // console.log(this.shoppingCartItems)
-
   }
 
   ngOnInit() {
@@ -53,24 +54,50 @@ export class CartComponent implements OnInit {
     this.cartService.removeFromCart(item)
   }
 
-  checkout(order: any){
-    this.total = $("#totalPrice").val()
-    console.log(this.total)
+  onOpenCheckout() {
+    if (!this.auth.isLoggedIn()) {
+      alert("Please Login Fisrt!")
+      this.router.navigateByUrl("/signin")
+    } 
+    else if(this.shoppingCartItems.length == 0) {
+      alert("Please add shoes into your card first!")
+    }
+    else {
+      $('#modalCheckout').modal('show'); 
+      this.total = $("#totalPrice").val()
+      this.totalPrice = parseInt(this.total)
+    }
+  }
+
+  checkout(order: any) {
     this.cartService.addOrder(order).subscribe(
       (res) => {
-        for(let i of order.shoppingCartItems)
-        {
-          this.cartService.updateDetail({
-            idOrder : res.idOrder,
-            idShoes : i.idShoes
+        alert("Success!")
+        for (let i of order.shoppingCartItems) {
+          for (let a of order.shoppingCartSize) {
+            this.size = parseInt(a)
+            this.cartService.getsize({
+              Size: this.size
             }).subscribe(
-            (res1) => {
-              alert("Success!")
-            },
-            err => {
-              console.log(err)
-              alert("Failed!")
-            })
+              (res1) => {
+                this.cartService.updateDetail({
+                  idOrder: res.ID,
+                  idShoes: i.idShoes,
+                  idSize: res1.idSize
+                }).subscribe(
+                  (res2) => {
+                    window.location.replace("/cart")
+                  },
+                  err => {
+                    console.log(err)
+                    alert("Failed!")
+                  })
+              },
+              err => {
+                console.log(err)
+                alert("Failed!")
+              })
+          }
         }
       },
       err => {

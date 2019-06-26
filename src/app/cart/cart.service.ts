@@ -73,4 +73,7 @@ export class CartService {
   public updateDetail(detail: any): Observable<any>{
     return this.http.post<any>("http://localhost:8000/api/detail/update",detail);
   }
+  public getsize(size: any): Observable<any>{
+    return this.http.post<any>("http://localhost:8000/api/size",size);
+  }
 }

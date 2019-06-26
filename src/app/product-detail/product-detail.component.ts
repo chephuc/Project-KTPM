@@ -40,8 +40,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   public addToCart(product: Product, Size: Size) {
-    this.cartService.addToCart(product,Size);
-    this.router.navigateByUrl('/');
-    console.log(this.Selected);
+    if(!this.Selected){
+      alert("Please select size!")
+    }else{
+      this.cartService.addToCart(product,Size);
+      this.router.navigateByUrl('/');
+    }
   } 
 }

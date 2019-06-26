@@ -84,7 +84,7 @@
             </div>
             <div class="card-footer bg-secondary text-light">
                 <div class="pull-right" style="margin: 10px">
-                    <button href="" class="btn btn-outline-info btn-sm pull-right" data-toggle="modal" data-target="#modalCheckout">Checkout</button>
+                    <button href="" class="btn btn-outline-info btn-sm pull-right" data-toggle="modal" (click)="onOpenCheckout()">Checkout</button>
                     <div class="pull-right" style="margin: 5px">
                         Total price: <b>{{getTotal() | async}}$</b>
                     </div>
@@ -117,7 +117,7 @@
                                         <input *ngIf="auth.isLoggedIn()"  type="text" class="form-control"
                                         placeholder="Phone" value="{{auth?.getUserDetails()?.UsersPhoneNum}}" name="" readonly>
                                         <label for="">Total Price</label>
-                                        <input  type="text" class="form-control"
+                                        <input type="number" class="form-control"
                                         placeholder="Total" id="totalPrice" value="{{getTotal() | async}}" name="" readonly>
                                     </div>
                                 </div>            
@@ -127,8 +127,9 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary" (click)="checkout({
                                 idUsers : auth?.getUserDetails()?.idUsers,
-                                Total : total,
-                                shoppingCartItems : shoppingCartItems
+                                Total : totalPrice,
+                                shoppingCartItems : shoppingCartItems,
+                                shoppingCartSize : shoppingCartSize
                             })">Save</button>
                         </div>
                     </div>
