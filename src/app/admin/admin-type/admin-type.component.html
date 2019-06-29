@@ -1,10 +1,10 @@
 <app-admin-navbar></app-admin-navbar>
 <div class="container mt-2">
     <div class="content">
-        <form class="form-inline">
-            <input [(ngModel)]="search" type="text" class="form-control ml-auto mr-2" placeholder="Search" name="search">
-            <button type="button" class="btn btn-dark mb-3" (click)="onOpenAddFormClick()" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i></button>
-        </form>
+        <!-- <form class="form-inline"> -->
+            <!-- <input [(ngModel)]="search" type="text" class="form-control ml-auto mr-2" placeholder="Search" name="search"> -->
+            <button type="button" class="btn btn-dark mb-3" style="margin-left: 96%" (click)="onOpenAddFormClick()" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <!-- </form> -->
         <div class="row mt-1 border pt-2 pb-2 ml-2 mr-2" *ngFor="let type of typeList | stringfilter: search | paginate: { itemsPerPage:8, currentPage: p }">
             <!-- <div class="col-sm-2 text-center">
                 <img class="cart-img" src="{{pro.ShoesImg}}" alt="prewiew" width="110" height="90">
