@@ -14,45 +14,45 @@ export class AdminService {
     }
     //SHOES
     public addShoes(shoes: Product): Observable<any>{
-      return this.http.post<any>("http://localhost:8000/api/products/add",shoes);
+      return this.http.post<any>("http://nodeserver.hopto.org/api/products/add",shoes);
     }
 
     public updateShoes(shoes: Product): Observable<any>{
-      return this.http.post<any>("http://localhost:8000/api/products/update",shoes);
+      return this.http.post<any>("http://nodeserver.hopto.org/api/products/update",shoes);
     }
 
     public deteleProduct(id: number): Observable<Product> {
-      return this.http.get<Product>("http://localhost:8000/api/products/delete/" + id);
+      return this.http.get<Product>("http://nodeserver.hopto.org/api/products/delete/" + id);
     }
     //TYPE
     public getType(): Observable<Type[]> {
-      return this.http.get<Type[]>('http://localhost:8000/api/type/');
+      return this.http.get<Type[]>('http://nodeserver.hopto.org/api/type/');
     }
     public addType(type: Type): Observable<any>{
-      return this.http.post<any>("http://localhost:8000/api/type/add",type);
+      return this.http.post<any>("http://nodeserver.hopto.org/api/type/add",type);
     }
     public deleteType(id: number): Observable<Type> {
-      return this.http.get<Type>("http://localhost:8000/api/type/delete/" + id);
+      return this.http.get<Type>("http://nodeserver.hopto.org/api/type/delete/" + id);
     }
     public updateType(type: Type): Observable<any>{
-      return this.http.post<any>("http://localhost:8000/api/type/update",type);
+      return this.http.post<any>("http://nodeserver.hopto.org/api/type/update",type);
     }
     //CATEGORY
     public getCategory(): Observable<Category[]>{
-      return this.http.get<Category[]>('http://localhost:8000/api/category/');
+      return this.http.get<Category[]>('http://nodeserver.hopto.org/api/category/');
     }
     public addCategory(category :Category): Observable<any>{
-      return this.http.post<any>("http://localhost:8000/api/category/add", category)
+      return this.http.post<any>("http://nodeserver.hopto.org/api/category/add", category)
     }
     public deleteCategory(id: number): Observable<Category> {
-      return this.http.get<Category>("http://localhost:8000/api/category/delete/" + id);
+      return this.http.get<Category>("http://nodeserver.hopto.org/api/category/delete/" + id);
     }
     public updateCategory(category: Category): Observable<any>{
-      return this.http.post<any>("http://localhost:8000/api/category/update",category);
+      return this.http.post<any>("http://nodeserver.hopto.org/api/category/update",category);
     }
 
     public uploadAvatarImage(file : FormData) : Observable<UploadEntity>{
-      return this.http.post<UploadEntity>(`http://localhost:8000/upload`,file);
+      return this.http.post<UploadEntity>(`http://nodeserver.hopto.org/upload`,file);
     }
     
 }

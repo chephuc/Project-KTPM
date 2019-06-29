@@ -1,4 +1,6 @@
-
+.container{
+    height: 660px;
+}
 
 .quantity {
     float: left;
@@ -74,4 +76,22 @@
   }
  a{
     text-decoration: none;
- } 
+ }
+ 
+ 
+ .my-pagination /deep/ .ngx-pagination a, .my-pagination /deep/ .ngx-pagination .current{
+    /* border: solid 1px; */
+    border-radius: 5%;
+  }
+  .my-pagination /deep/ .ngx-pagination a:hover{
+    /* border: solid 1px; */
+    border-radius: 5%;
+    text-decoration: none;
+  }
+  
+  .my-pagination /deep/ .ngx-pagination{
+    position: absolute;
+    bottom: -0px; 
+    left: 30%; 
+    /* transform: translateX(-50%); */
+  }

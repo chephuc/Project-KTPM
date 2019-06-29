@@ -5,7 +5,9 @@ import { Product, Size } from '../home-page/product/product';
 import { Observable, of } from 'rxjs';
 import { CartService } from './cart.service';
 import { AuthenticationService } from '../authentication.service';
-import { AuthGuardService } from '../auth-guard.service'
+import { AuthGuardService } from '../auth-guard.service';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -72,33 +74,51 @@ export class CartComponent implements OnInit {
   checkout(order: any) {
     this.cartService.addOrder(order).subscribe(
       (res) => {
-        alert("Success!")
-        for (let i of order.shoppingCartItems) {
-          for (let a of order.shoppingCartSize) {
-            this.size = parseInt(a)
-            this.cartService.getsize({
-              Size: this.size
-            }).subscribe(
-              (res1) => {
-                this.cartService.updateDetail({
-                  idOrder: res.ID,
-                  idShoes: i.idShoes,
-                  idSize: res1.idSize
+
+
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes!'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Done!',
+              'Your order will arrive soon',
+              'success'
+            )
+            for (let i of order.shoppingCartItems) {
+              for (let a of order.shoppingCartSize) {
+                this.size = parseInt(a)
+                this.cartService.getsize({
+                  Size: this.size
                 }).subscribe(
-                  (res2) => {
-                    window.location.replace("/cart")
+                  (res1) => {
+                    this.cartService.updateDetail({
+                      idOrder: res.ID,
+                      idShoes: i.idShoes,
+                      idSize: res1.idSize
+                    }).subscribe(
+                      (res2) => {
+                        window.location.replace("/cart")
+                      },
+                      err => {
+                        console.log(err)
+                        alert("Failed!")
+                      })
                   },
                   err => {
                     console.log(err)
                     alert("Failed!")
                   })
-              },
-              err => {
-                console.log(err)
-                alert("Failed!")
-              })
+              }
+            }
           }
-        }
+        })
       },
       err => {
         console.log(err)

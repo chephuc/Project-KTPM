@@ -1,33 +1,32 @@
-
 <script src="https://use.fontawesome.com/c560c025cf.js"></script>
 <div class="container">
-   <div class="card shopping-cart">
-            <div class="card-header bg-secondary text-light">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                Shopping cart
-                <a href="" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
-                <div class="clearfix"></div>
-            </div>
-            <div class="card-body">
-                    <!-- PRODUCT -->
-                    <div class="row mt-1 border pt-2 pb-2 ml-2 mr-2" *ngFor="let item of shoppingCartItems ; let i = index">
-                        <div class="col-12 col-sm-12 col-md-2 text-center">
-                                <img class="cart-img" [src]="item.ShoesImg" alt="prewiew" width="120" height="80">
-                        </div>
-                        <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6 mt-2">
-                            <h6><a class="text-dark" [routerLink]="['/product-detail',item.idShoes]"><b>{{item.ShoesName}}</b></a></h6>
-                            <p style="font-size: 80%">{{item.ShoesColor}}</p>
-                            <h6 class="mt-2"><b>{{item.ShoesPrice}}$</b></h6>
-                            <!-- <select name="state" class="select2" id="select2" [(ngModel)]="Selected">
+    <div class="card shopping-cart">
+        <div class="card-header bg-secondary text-light">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            Shopping cart
+            <a href="" class="btn btn-outline-info btn-sm pull-right">Continue shopping</a>
+            <div class="clearfix"></div>
+        </div>
+        <div class="card-body">
+            <!-- PRODUCT -->
+            <div class="row mt-1 border pt-2 pb-2 ml-2 mr-2" *ngFor="let item of shoppingCartItems | paginate: { itemsPerPage:3, currentPage: p } ; let i = index">
+                <div class="col-12 col-sm-12 col-md-2 text-center">
+                    <img class="cart-img" [src]="item.ShoesImg" alt="prewiew" width="120" height="80">
+                </div>
+                <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6 mt-2">
+                    <h6><a class="text-dark" [routerLink]="['/product-detail',item.idShoes]"><b>{{item.ShoesName}}</b></a></h6>
+                    <p style="font-size: 80%">{{item.ShoesColor}}</p>
+                    <h6 class="mt-2"><b>{{item.ShoesPrice}}$</b></h6>
+                    <!-- <select name="state" class="select2" id="select2" [(ngModel)]="Selected">
                                 <option *ngFor="let size of shoppingCartSize" [value]="size.Size">{{size.Size}}</option>
                             </select> -->
-                            <p>Size: {{shoppingCartSize[i]}}</p>
-                        </div>
-                        <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right">
-                            <!-- <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px"> -->
-                                
-                            <!-- </div> -->
-                            <!-- <div class="col-4 col-sm-4 col-md-4">
+                    <p>Size: {{shoppingCartSize[i]}}</p>
+                </div>
+                <div class="col-12 col-sm-12 text-sm-center col-md-4 text-md-right">
+                    <!-- <div class="col-3 col-sm-3 col-md-6 text-md-right" style="padding-top: 5px"> -->
+
+                    <!-- </div> -->
+                    <!-- <div class="col-4 col-sm-4 col-md-4">
                                 <div class="quantity">
                                     <input type="button" value="+" class="plus">
                                     <input type="number" step="1" max="99" min="1" value="1" title="Qty" class="qty"
@@ -35,17 +34,20 @@
                                     <input type="button" value="-" class="minus">
                                 </div>
                             </div> -->
-                            <!-- <div class="col-2 col-sm-2 col-md-2 text-right"> -->
-                                <button type="button" class="btn btn-outline-danger btn-xs ml-auto" (click)="removeItem(item)">
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                </button>
-                            <!-- </div> -->
-                        </div>
-                    </div>
-                    <!-- <hr> -->
-                    <!-- END PRODUCT -->
-                    <!-- PRODUCT -->
-                    <!-- <div class="row">
+                    <!-- <div class="col-2 col-sm-2 col-md-2 text-right"> -->
+                    <button type="button" class="btn btn-outline-danger btn-xs ml-auto" (click)="removeItem(item)">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                    <!-- </div> -->
+                </div>
+
+                <pagination-controls (pageChange)="p =$event" class="my-pagination text-center"></pagination-controls>
+
+            </div>
+            <!-- <hr> -->
+            <!-- END PRODUCT -->
+            <!-- PRODUCT -->
+            <!-- <div class="row">
                         <div class="col-12 col-sm-12 col-md-2 text-center">
                                 <img class="img-responsive" src="http://placehold.it/120x80" alt="prewiew" width="120" height="80">
                         </div>
@@ -75,74 +77,71 @@
                         </div>
                     </div>
                     <hr> -->
-                    <!-- END PRODUCT -->
-                <!-- <div class="pull-right">
+            <!-- END PRODUCT -->
+            <!-- <div class="pull-right">
                     <a href="" class="btn btn-outline-secondary pull-right">
                         Update shopping cart
                     </a>
                 </div> -->
-            </div>
-            <div class="card-footer bg-secondary text-light">
-                <div class="pull-right" style="margin: 10px">
-                    <button href="" class="btn btn-outline-info btn-sm pull-right" data-toggle="modal" (click)="onOpenCheckout()">Checkout</button>
-                    <div class="pull-right" style="margin: 5px">
-                        Total price: <b>{{getTotal() | async}}$</b>
-                    </div>
+        </div>
+        <div class="card-footer bg-secondary text-light">
+            <div class="pull-right" style="margin: 10px">
+                <button href="" class="btn btn-outline-info btn-sm pull-right" data-toggle="modal" (click)="onOpenCheckout()">Checkout</button>
+                <div class="pull-right" style="margin: 5px">
+                    Total price: <b>{{getTotal() | async}}$</b>
                 </div>
             </div>
-            <!-- Modal -->
-            <div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                            <div class="modal-header">
-                                    <h5 class="modal-title">Order Details</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                </div>
-                        <div class="modal-body">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="">Username</label>
-                                        <input *ngIf="auth.isLoggedIn()"  type="text" class="form-control"
-                                        placeholder="User mail" value="{{auth?.getUserDetails()?.UsersName}}" name="" readonly>
-                                        <label for="">Email</label>
-                                        <input *ngIf="auth.isLoggedIn()"  type="text" class="form-control"
-                                        placeholder="User mail" value="{{auth?.getUserDetails()?.UsersEmail}}" name="" readonly>
-                                        <label for="">Address</label>
-                                        <input *ngIf="auth.isLoggedIn()"  type="text" class="form-control"
-                                        placeholder="Address" value="{{auth?.getUserDetails()?.UsersAddress}}" name="" readonly>
-                                        <label for="">Phone number</label>
-                                        <input *ngIf="auth.isLoggedIn()"  type="text" class="form-control"
-                                        placeholder="Phone" value="{{auth?.getUserDetails()?.UsersPhoneNum}}" name="" readonly>
-                                        <label for="">Total Price</label>
-                                        <input type="number" class="form-control"
-                                        placeholder="Total" id="totalPrice" value="{{getTotal() | async}}" name="" readonly>
-                                    </div>
-                                </div>            
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Order Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Username</label>
+                                <input *ngIf="auth.isLoggedIn()" type="text" class="form-control" placeholder="User mail" value="{{auth?.getUserDetails()?.UsersName}}"
+                                    name="" readonly>
+                                <label for="">Email</label>
+                                <input *ngIf="auth.isLoggedIn()" type="text" class="form-control" placeholder="User mail" value="{{auth?.getUserDetails()?.UsersEmail}}"
+                                    name="" readonly>
+                                <label for="">Address</label>
+                                <input *ngIf="auth.isLoggedIn()" type="text" class="form-control" placeholder="Address" value="{{auth?.getUserDetails()?.UsersAddress}}"
+                                    name="" readonly>
+                                <label for="">Phone number</label>
+                                <input *ngIf="auth.isLoggedIn()" type="text" class="form-control" placeholder="Phone" value="{{auth?.getUserDetails()?.UsersPhoneNum}}"
+                                    name="" readonly>
+                                <label for="">Total Price</label>
+                                <input type="number" class="form-control" placeholder="Total" id="totalPrice" value="{{getTotal() | async}}" name="" readonly>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" (click)="checkout({
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" (click)="checkout({
                                 idUsers : auth?.getUserDetails()?.idUsers,
                                 Total : totalPrice,
                                 shoppingCartItems : shoppingCartItems,
                                 shoppingCartSize : shoppingCartSize
                             })">Save</button>
-                        </div>
                     </div>
                 </div>
             </div>
-            
-            <script>
-                $('#exampleModal').on('show.bs.modal', event => {
-                    var button = $(event.relatedTarget);
-                    var modal = $(this);
-                    // Use above variables to manipulate the DOM
-                    
-                });
-            </script>
         </div>
+
+        <script>
+            $('#exampleModal').on('show.bs.modal', event => {
+                var button = $(event.relatedTarget);
+                var modal = $(this);
+                // Use above variables to manipulate the DOM
+
+            });
+        </script>
+    </div>
 </div>

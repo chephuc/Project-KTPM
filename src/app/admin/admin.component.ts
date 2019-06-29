@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { Category } from '../navbar/category'
 import { AdminService } from './admin.service'
 import { AuthenticationService } from '../authentication.service';
-import { AuthGuardService } from '../auth-guard.service'
+import { AuthGuardService } from '../auth-guard.service';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -29,6 +31,26 @@ export class AdminComponent implements OnInit {
     console.log("user",this.auth.getUserDetails().UsersName)
   }
 
+  showAlert(text, type) {
+    if (type === "success") {
+      Swal.fire({
+        position: 'center',
+        type: 'success',
+        title: text,
+        showConfirmButton: false,
+        timer: 1000
+      });
+    }
+    else if (type === "error") {
+      Swal.fire({
+        position: 'center',
+        type: 'error',
+        title: text,
+        showConfirmButton: true,
+      });
+    }
+  }
+
   pushDataToForm(category: Category) {
     this.isAddForm = false;
     this.newCategory = JSON.parse(JSON.stringify(category));
@@ -46,26 +68,43 @@ export class AdminComponent implements OnInit {
   addCategory(category: Category) {
     this.adminService.addCategory(category).subscribe(
       (res) => {
+        $("#btn-close").click()
+        this.showAlert("Successful!", "success")
         this.router.navigateByUrl('/admincategory')
         this.adminService.getCategory().subscribe(data => this.categoryList = data)
-        alert("Success!")
       },
       err => {
         console.log(err)
-        alert("Failed!")
+        this.showAlert("Failed!", "error")
       }
     )
   }
   deleteCategory(id: number){
     this.adminService.deleteCategory(id).subscribe(
       (res) => {
-        this.router.navigateByUrl("/admincategory")
-        this.adminService.getCategory().subscribe(data => this.categoryList = data);
-        alert("Success!")
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+            this.router.navigateByUrl("/admincategory")
+            this.adminService.getCategory().subscribe(data => this.categoryList = data);
+          }
+        })
       },
       err => {
         console.log(err)
-        alert("Failed!")
+        this.showAlert("Failed!", "error")
       }
     )
   }
@@ -77,13 +116,13 @@ export class AdminComponent implements OnInit {
 
     this.adminService.updateCategory(category).subscribe(
       (res) => {
-        alert("Success!")
+        this.showAlert("Successful!", "success")
         this.router.navigateByUrl("/admincategory")
         this.adminService.getCategory().subscribe(data => this.categoryList = data);
       },
       err => {
         console.log(err)
-        alert("Failed!")
+        this.showAlert("Failed!", "error")
       })
   }
   onSubmit(category: Category) {

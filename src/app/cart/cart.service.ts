@@ -67,13 +67,13 @@ export class CartService {
   }
 
   public addOrder(order: any): Observable<any>{
-    return this.http.post<any>("http://localhost:8000/api/order/add",order);
+    return this.http.post<any>("http://nodeserver.hopto.org/api/order/add",order);
   }
 
   public updateDetail(detail: any): Observable<any>{
-    return this.http.post<any>("http://localhost:8000/api/detail/update",detail);
+    return this.http.post<any>("http://nodeserver.hopto.org/api/detail/update",detail);
   }
   public getsize(size: any): Observable<any>{
-    return this.http.post<any>("http://localhost:8000/api/size",size);
+    return this.http.post<any>("http://nodeserver.hopto.org/api/size",size);
   }
 }

@@ -14,6 +14,6 @@ export class ProductService {
     }
 
   getAllProducts(): Observable<Bestseller[]> {
-    return this.http.get<Bestseller[]>('http://localhost:8000/api/products/bestseller');
+    return this.http.get<Bestseller[]>('http://nodeserver.hopto.org/api/products/bestseller');
   }
 }

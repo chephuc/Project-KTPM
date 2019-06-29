@@ -14,10 +14,10 @@ export class CategoryService {
     }
 
   getCategory(): Observable<Category[]> {
-    return this.http.get<Category[]>('http://localhost:8000/api/category/');
+    return this.http.get<Category[]>('http://nodeserver.hopto.org/api/category/');
   }
   
   // getProductCategory(id: number): Observable<Category[]> {
-  //   return this.http.get<Category[]>('http://localhost:8000/api/category/' + id);
+  //   return this.http.get<Category[]>('http://nodeserver.hopto.org/api/category/' + id);
   // }
 }

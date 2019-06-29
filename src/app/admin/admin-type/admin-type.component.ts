@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Type } from '../../home-page/product/product';
 import { AdminService } from '../admin.service'
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-type',
@@ -25,6 +26,25 @@ export class AdminTypeComponent implements OnInit {
     this.adminService.getType().subscribe(data => this.typeList = data)
   }
 
+  showAlert(text, type) {
+    if (type === "success") {
+      Swal.fire({
+        position: 'center',
+        type: 'success',
+        title: text,
+        showConfirmButton: false,
+        timer: 1000
+      });
+    }
+    else if (type === "error") {
+      Swal.fire({
+        position: 'center',
+        type: 'error',
+        title: text,
+        showConfirmButton: true,
+      });
+    }
+  }
   pushDataToForm(type: Type) {
     this.isAddForm = false;
     this.newType = JSON.parse(JSON.stringify(type));
@@ -40,13 +60,15 @@ export class AdminTypeComponent implements OnInit {
   addType(type: Type) {
     this.adminService.addType(type).subscribe(
       (res) => {
+        $("#btn-close").click()
         this.router.navigateByUrl('/admintype')
         this.adminService.getType().subscribe(data => this.typeList = data)
-        alert("Success!")
+        this.showAlert("Successful!", "success")
       },
       err => {
         console.log(err)
-        alert("Failed!")
+        $("#btn-close").click()
+        this.showAlert("Failed!", "error")
       }
     )
   }
@@ -54,13 +76,30 @@ export class AdminTypeComponent implements OnInit {
   deleteType(id: number){
     this.adminService.deleteType(id).subscribe(
       (res) => {
-        this.router.navigateByUrl("/admintype")
-        this.adminService.getType().subscribe(data => this.typeList = data);
-        alert("Success!")
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Deleted!',
+              'Your type has been deleted.',
+              'success'
+            )
+            this.router.navigateByUrl("/admintype")
+            this.adminService.getType().subscribe(data => this.typeList = data);
+          }
+        })
+        
       },
       err => {
         console.log(err)
-        alert("Failed!")
+        this.showAlert("Failed!", "error")
       }
     )
   }
@@ -72,13 +111,15 @@ export class AdminTypeComponent implements OnInit {
 
     this.adminService.updateType(type).subscribe(
       (res) => {
-        alert("Success!")
+        $("#btn-close").click()
+        this.showAlert("Successful!", "success")
         this.router.navigateByUrl("/admintype")
         this.adminService.getType().subscribe(data => this.typeList = data);
       },
       err => {
         console.log(err)
-        alert("Failed!")
+        $("#btn-close").click()
+        this.showAlert("Failed!", "error")
       })
   }
   onSubmit(type: Type) {

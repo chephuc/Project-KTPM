@@ -14,18 +14,18 @@ export class ProductService {
     }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>('http://localhost:8000/api/products');
+    return this.http.get<Product[]>('http://nodeserver.hopto.org/api/products');
   }
     
   getAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>('http://localhost:8000/api/products/newreleases');
+    return this.http.get<Product[]>('http://nodeserver.hopto.org/api/products/newreleases');
   }
   
   getProduct(id: number): Observable<Product> {
-    return this.http.get<Product>('http://localhost:8000/api/products/' + id);
+    return this.http.get<Product>('http://nodeserver.hopto.org/api/products/' + id);
   }
 
   getProductSize(id: number): Observable<Size[]> {
-    return this.http.get<Size[]>('http://localhost:8000/api/products/size/' + id);
+    return this.http.get<Size[]>('http://nodeserver.hopto.org/api/products/size/' + id);
   }
 }

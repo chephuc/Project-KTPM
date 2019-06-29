@@ -42,6 +42,7 @@ export interface TokenPayload{
 @Injectable()
 export class AuthenticationService {
     private token: string
+    checkadmin: boolean
 
     constructor(private http:HttpClient, private router: Router){
        
@@ -77,8 +78,8 @@ export class AuthenticationService {
     }
     public register(user:TokenPayload):Observable<any>{
 
-        return this.http.post(`http://localhost:8000/user/register`,user);
-        // const base = this.http.post(`http://localhost:8000/user/register`,user)
+        return this.http.post(`http://nodeserver.hopto.org/user/register`,user);
+        // const base = this.http.post(`http://nodeserver.hopto.org/user/register`,user)
 
         // const request = base.pipe(
         //     map((data: TokenResponse)=>{
@@ -92,11 +93,18 @@ export class AuthenticationService {
     }
 
     public login(user:TokenPayload):Observable<any>{
-        const base = this.http.post(`http://localhost:8000/user/login`,user)
+        const base = this.http.post(`http://nodeserver.hopto.org/user/login`,user)
 
         const request = base.pipe(
             map((data: TokenResponse)=>{
-                data.permission == "admin" ? this.router.navigateByUrl('/adminshoes') : this.router.navigateByUrl('/homepage')
+                if(data.permission == "admin"){
+                    this.checkadmin = true
+                    this.router.navigateByUrl('/adminshoes')
+                }else{
+                    this.checkadmin = false
+                    this.router.navigateByUrl('/homepage')
+                }
+                // data.permission == "admin" ? this.router.navigateByUrl('/adminshoes') : this.router.navigateByUrl('/homepage')
                 if(data.token){
                     this.saveToken(data.token)
                 }
@@ -107,13 +115,14 @@ export class AuthenticationService {
     }
 
     public profile():Observable<any>{
-        return this.http.get(`http://localhost:8000/user/profile`, {
+        return this.http.get(`http://nodeserver.hopto.org/user/profile`, {
             headers: { Authorization:`${this.getToken()}`}
         })
     }
 
     public logOut():void{
         this.token = ''
+        this.checkadmin = false 
         window.localStorage.removeItem('userToken')
         this.router.navigateByUrl('/')
     }

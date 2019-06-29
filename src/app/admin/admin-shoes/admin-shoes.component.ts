@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../home-page/product/product.service';
-import { Product, Type } from '../../home-page/product/product';
+import { Product, Type, Size } from '../../home-page/product/product';
 import { AdminService } from '../admin.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Category } from '../../navbar/category';
+import Swal from 'sweetalert2';
 import * as $ from "jquery";
 import * as bootstrap from "bootstrap"
 
@@ -15,7 +16,7 @@ import * as bootstrap from "bootstrap"
 })
 export class AdminShoesComponent implements OnInit {
 
-  constructor(private _service: ProductService, private adminService: AdminService, private router: Router, private route: ActivatedRoute, ) { }
+  constructor(private _service: ProductService, private adminService: AdminService, private router: Router, private route: ActivatedRoute) { }
   productList: Product[];
   newProduct: any = {
     idShoes: "",
@@ -29,8 +30,11 @@ export class AdminShoesComponent implements OnInit {
 
   categoryList: Category[];
   typeList: Type[];
+  productSize: Size[];
   isAddForm: boolean;
   shoesBeforeUpdate: any;
+  checksize: boolean;
+  sizeArr: string = "";
 
   ngOnInit() {
     this._service.getProducts().subscribe(data => this.productList = data);
@@ -38,14 +42,46 @@ export class AdminShoesComponent implements OnInit {
     this.adminService.getType().subscribe(data => this.typeList = data);
   }
 
-  insertDataToForm(shoes: Product) {
+  showAlert(text, type) {
+    if (type === "success") {
+      Swal.fire({
+        position: 'center',
+        type: 'success',
+        title: text,
+        showConfirmButton: false,
+        timer: 1000
+      });
+    }
+    else if (type === "error") {
+      Swal.fire({
+        position: 'center',
+        type: 'error',
+        title: text,
+        showConfirmButton: true,
+      });
+    }
+  }
+
+  insertDataToForm(shoes: Product, id: number) {
+    this.checksize = true
     this.isAddForm = false;
     this.newProduct = JSON.parse(JSON.stringify(shoes));
     $("#wizardPicturePreview").attr("src", shoes.ShoesImg);
     this.shoesBeforeUpdate = JSON.parse(JSON.stringify(this.newProduct));
+
+    this._service.getProductSize(id).subscribe(data =>{
+      this.productSize = data;
+      this.sizeArr = "";
+      for(let pro of this.productSize){
+        this.sizeArr += pro.Size + " ";
+      } 
+    })
+
+    
   }
 
   onOpenAddFormClick() {
+    this.checksize = false
     this.isAddForm = true;
 
     this.newProduct = {
@@ -81,31 +117,49 @@ export class AdminShoesComponent implements OnInit {
         console.log(shoes)
         this.adminService.addShoes(shoes).subscribe(
           (res1) => {
-            alert("Success!")
-            window.location.replace('/adminshoes');
+            $("#btn-close").click()
+            this.showAlert("Successful!", "success")
+            this.router.navigateByUrl("/adminshoes")        
             this._service.getProducts().subscribe(data => this.productList = data);
           },
           err => {
             console.log(err)
-            alert("Failed!")
+            this.showAlert("Failed!", "error")
           })
       },
       err => {
         console.log(err)
-        alert("Failed!")
+        this.showAlert("Failed!", "error")
       })
   }
 
-  delete(id: number) {
+  delete(id: any) {
     this.adminService.deteleProduct(id).subscribe(
       (res) => {
-        this.router.navigateByUrl("/adminshoes")
-        this._service.getProducts().subscribe(data => this.productList = data);
-        alert("Success!")
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              'Deleted!',
+              'Your shoes has been deleted.',
+              'success'
+            )
+            this.router.navigateByUrl("/adminshoes")
+            this._service.getProducts().subscribe(data => this.productList = data);
+          }
+        })
+        
       },
       err => {
         console.log(err)
-        alert("Failed!")
+        this.showAlert("Failed!", "error")
       }
     )
   }
@@ -121,13 +175,14 @@ export class AdminShoesComponent implements OnInit {
     file.append('photo', photo);
     this.adminService.updateShoes(shoes).subscribe(
       (res) => {
-        alert("Success!")
-        window.location.replace('/adminshoes');
+        $("#btn-close").click()
+        this.showAlert("Successful!", "success")
+        this.router.navigateByUrl("/adminshoes")
         this._service.getProducts().subscribe(data => this.productList = data);
       },
       err => {
         console.log(err)
-        alert("Failed!")
+        this.showAlert("Failed!", "error")
       })
   }
 
