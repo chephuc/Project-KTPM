@@ -23,7 +23,8 @@ export class CartComponent implements OnInit {
   Selected: Number;
   total: any;
   totalPrice: number
-  size: number
+  size: number;
+  p: any
 
   constructor(private cartService: CartService, private authguard: AuthGuardService, private auth: AuthenticationService, private router: Router) {
     this.shoppingCartItems$ = this

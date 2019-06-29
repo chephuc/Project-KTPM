@@ -97,7 +97,7 @@ export class AdminShoesComponent implements OnInit {
     $("#wizardPicturePreview").attr("src", '../../assets/images/image-select-default.png');
   }
 
-  files: any[];
+  files: any;
   onFileChangeEvent(event) {
     this.files = event.target.files[0];
     console.log(this.files);
