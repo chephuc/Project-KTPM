@@ -28,8 +28,6 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.adminService.getCategory().subscribe(data => this.categoryList = data)
-    
-    console.log("user",this.auth.getUserDetails().UsersName)
   }
 
   showAlert(text, type) {
