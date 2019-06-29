@@ -75,34 +75,35 @@ export class AdminTypeComponent implements OnInit {
   }
 
   deleteType(id: number){
-    this.adminService.deleteType(id).subscribe(
-      (res) => {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.value) {
-            Swal.fire(
-              'Deleted!',
-              'Your type has been deleted.',
-              'success'
-            )
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Your type has been deleted.',
+          'success'
+        )
+        //delete
+        this.adminService.deleteType(id).subscribe(
+          (res) => {
             this.router.navigateByUrl("/admintype")
             this.adminService.getType().subscribe(data => this.typeList = data);
+          },
+          err => {
+            console.log(err)
+            this.showAlert("Failed!", "error")
           }
-        })
-        
-      },
-      err => {
-        console.log(err)
-        this.showAlert("Failed!", "error")
+        )
       }
-    )
+    })
   }
 
   updateType(type: Type) {

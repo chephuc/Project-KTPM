@@ -15,6 +15,6 @@ export class ProductService {
     }
 
   getAllProducts(): Observable<Slider[]> {
-    return this.http.get<Slider[]>('http://localhost:8000/api/slider/');
+    return this.http.get<Slider[]>('http://nodeserver.hopto.org/api/slider/');
   }
 }

@@ -73,25 +73,25 @@ export class CartComponent implements OnInit {
   }
 
   checkout(order: any) {
-    this.cartService.addOrder(order).subscribe(
-      (res) => {
 
-
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes!'
-        }).then((result) => {
-          if (result.value) {
-            Swal.fire(
-              'Done!',
-              'Your order will arrive soon',
-              'success'
-            )
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Done!',
+          'Your order will arrive soon',
+          'success'
+        )
+        //checkout
+        this.cartService.addOrder(order).subscribe(
+          (res) => {
             for (let i of order.shoppingCartItems) {
               for (let a of order.shoppingCartSize) {
                 this.size = parseInt(a)
@@ -118,13 +118,13 @@ export class CartComponent implements OnInit {
                   })
               }
             }
+          },
+          err => {
+            console.log(err)
+            alert("Failed!")
           }
-        })
-      },
-      err => {
-        console.log(err)
-        alert("Failed!")
+        )
       }
-    )
+    })
   }
 }

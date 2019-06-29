@@ -94,7 +94,7 @@ export class AdminShoesComponent implements OnInit {
       idcategory: "",
       idtype: ""
     };
-    $("#wizardPicturePreview").attr("src", '../../assets/images/image-select-default.png');
+    $("#wizardPicturePreview").attr("src", 'assets/images/image-select-default.png');
   }
 
   files: any;
@@ -136,34 +136,36 @@ export class AdminShoesComponent implements OnInit {
   }
 
   delete(id: any) {
-    this.adminService.deteleProduct(id).subscribe(
-      (res) => {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.value) {
-            Swal.fire(
-              'Deleted!',
-              'Your shoes has been deleted.',
-              'success'
-            )
+
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Your shoes has been deleted.',
+          'success'
+        )
+        //delete
+        this.adminService.deteleProduct(id).subscribe(
+          (res) => {
             this.router.navigateByUrl("/adminshoes")
             this._service.getProducts().subscribe(data => this.productList = data);
+          },
+          err => {
+            console.log(err)
+            this.showAlert("Failed!", "error")
           }
-        })
-        
-      },
-      err => {
-        console.log(err)
-        this.showAlert("Failed!", "error")
+        )
       }
-    )
+    })
   }
 
   update(shoes: Product, photo: File) {
