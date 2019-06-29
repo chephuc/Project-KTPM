@@ -24,6 +24,7 @@ export class AdminComponent implements OnInit {
   }
   isAddForm: boolean;
   categoryBeforeUpdate: any;
+  p: any
 
   ngOnInit() {
     this.adminService.getCategory().subscribe(data => this.categoryList = data)

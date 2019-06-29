@@ -21,6 +21,7 @@ export class AdminTypeComponent implements OnInit {
   }
   isAddForm: boolean;
   typeBeforeUpdate: any;
+  p: any
 
   ngOnInit() {
     this.adminService.getType().subscribe(data => this.typeList = data)

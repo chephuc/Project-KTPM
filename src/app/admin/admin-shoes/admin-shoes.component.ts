@@ -35,6 +35,8 @@ export class AdminShoesComponent implements OnInit {
   shoesBeforeUpdate: any;
   checksize: boolean;
   sizeArr: string = "";
+  p: any;
+  search: any
 
   ngOnInit() {
     this._service.getProducts().subscribe(data => this.productList = data);
