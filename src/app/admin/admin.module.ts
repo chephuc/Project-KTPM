@@ -9,6 +9,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
 import { AdminTypeComponent } from './admin-type/admin-type.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AdminSizeComponent } from './admin-size/admin-size.component';
+import { StringFilterPipe } from './admin-size/string-filter.pipe';
 
 const routes: Routes = [
 
@@ -20,7 +22,9 @@ const routes: Routes = [
     AdminNavbarComponent,
     AdminShoesComponent,
     StringfilterPipe,
-    AdminTypeComponent
+    AdminTypeComponent,
+    AdminSizeComponent,
+    StringFilterPipe
   ],
   imports: [
     CommonModule,

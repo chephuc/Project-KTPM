@@ -1,0 +1,32 @@
+.content {
+    position: relative;
+    padding: 1px 16px;
+    height: 1010px;
+}
+
+a{
+    text-decoration: none;
+ }
+
+ h6{
+     font-size: 90%;
+ }
+
+.my-pagination /deep/ .ngx-pagination a, .my-pagination /deep/ .ngx-pagination .current{
+    /* border: solid 1px; */
+    border-radius: 5%;
+  }
+  .my-pagination /deep/ .ngx-pagination a:hover{
+    /* border: solid 1px; */
+    border-radius: 5%;
+    text-decoration: none;
+  }
+  
+  .my-pagination /deep/ .ngx-pagination{
+    position: absolute; 
+    bottom: -15px; 
+    left: 30%; 
+    /* transform: translateX(-50%); */
+  }
+  
+  

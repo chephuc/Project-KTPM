@@ -10,7 +10,7 @@
                 <img class="cart-img" src="{{pro.ShoesImg}}" alt="prewiew" width="110" height="90">
             </div>
             <div class="text-sm-center col-sm-8 text-md-left mt-2">
-                <h6><a class="text-dark" [routerLink]="['/product-detail',pro.idShoes]">{{pro.ShoesName}}</a></h6>
+                <h6><a class="text-dark" [routerLink]="['/product-detail',pro.idShoes]">{{pro.idShoes}}.{{pro.ShoesName}}</a></h6>
                 <h6>{{pro.ShoesColor}}</h6>
                 <h6>{{pro.ShoesPrice}}$</h6>
             </div>

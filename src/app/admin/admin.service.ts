@@ -3,7 +3,7 @@ import { Observable} from 'rxjs';
 
 import { HttpClient } from '@angular/common/http';
 
-import { Product, Type } from '../home-page/product/product';
+import { Product, Type, Detail, Size } from '../home-page/product/product';
 import { Category } from '../navbar/category'
 import { UploadEntity } from '../upload-entity';
 
@@ -50,7 +50,17 @@ export class AdminService {
     public updateCategory(category: Category): Observable<any>{
       return this.http.post<any>("http://nodeserver.hopto.org/api/category/update",category);
     }
-
+    //DETAIL
+    public getDetail(): Observable<Detail[]>{
+      return this.http.get<Detail[]>('http://nodeserver.hopto.org/api/size/detail');
+    }
+    public addDetail(detail :Detail): Observable<any>{
+      return this.http.post<any>("http://nodeserver.hopto.org/api/detail/add", detail)
+    }
+    //SIZE
+    public getAllSize(): Observable<Size[]>{
+      return this.http.get<Size[]>('http://nodeserver.hopto.org/api/size/all');
+    }
     public uploadAvatarImage(file : FormData) : Observable<UploadEntity>{
       return this.http.post<UploadEntity>(`http://nodeserver.hopto.org/upload`,file);
     }

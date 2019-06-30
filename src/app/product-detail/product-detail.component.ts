@@ -3,6 +3,7 @@ import { Product,Size } from '../home-page/product/product';
 import { ProductService } from '../home-page/product/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../cart/cart.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,7 +23,34 @@ export class ProductDetailComponent implements OnInit {
     private router: Router) { 
 
     }
-
+  
+    showAlert(text, type) {
+      if (type === "success") {
+        Swal.fire({
+          position: 'center',
+          type: 'success',
+          title: text,
+          showConfirmButton: false,
+          timer: 1000
+        });
+      }
+      else if (type === "error") {
+        Swal.fire({
+          position: 'center',
+          type: 'error',
+          title: text,
+          showConfirmButton: true,
+        });
+      }
+      else if (type === "warning") {
+        Swal.fire({
+          position: 'center',
+          type: 'warning',
+          title: text,
+          showConfirmButton: true,
+        });
+      }
+    }
   ngOnInit() {
 
     this.route.params.subscribe(params =>{
@@ -41,7 +69,7 @@ export class ProductDetailComponent implements OnInit {
 
   public addToCart(product: Product, Size: Size) {
     if(!this.Selected){
-      alert("Please select size!")
+      this.showAlert("Please select a size", "warning")
     }else{
       this.cartService.addToCart(product,Size);
       this.router.navigateByUrl('/');

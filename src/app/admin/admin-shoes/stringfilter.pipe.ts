@@ -10,7 +10,9 @@ export class StringfilterPipe implements PipeTransform {
     if(!q || q == ""){
       return value;
     }
-    return value.filter(item => -1 < item.ShoesName.toLowerCase().indexOf(q.toLowerCase().trim()));
+    return value.filter(item => -1 < item.ShoesName.toLowerCase().indexOf(q.toLowerCase().trim())
+    || -1 < item.idShoes.toString().indexOf(q.toLowerCase().trim())
+    );
   }
 
 }

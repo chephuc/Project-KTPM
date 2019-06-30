@@ -18,5 +18,11 @@ export interface Type{
     typeName: string;
 }
 
-
+export interface Detail{
+    ShoesName: string;
+    idShoes: string;
+    Size: string;
+    idOrder: number;
+    idSize: string
+}
  
