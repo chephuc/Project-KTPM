@@ -10,12 +10,12 @@ import { HttpClient } from "@angular/common/http";
 		}
 		redirectUrl:string;					   
 		insertUser(user:User): Observable<User> {
-				return this.http.post<User>('http://localhost:8000/api/user/insert/', user);
+				return this.http.post<User>('http://nodeserver.hopto.org/api/user/insert/', user);
 		}
 
 		login(username:String, pass:String)
 		{
-			return this.http.post<any>('http://localhost:8000/api/login/',{username:username, password:pass})
+			return this.http.post<any>('http://nodeserver.hopto.org/api/login/',{username:username, password:pass})
 			.subscribe(user => {
 				if(user&&user.token)
 					localStorage.setItem('currentUser',JSON.stringify(user));

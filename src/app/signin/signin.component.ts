@@ -3,6 +3,7 @@ import { UserService } from '../register/User.service';
 import { AuthenticationService, TokenPayload}  from '../authentication.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-signin',
@@ -23,12 +24,35 @@ export class SigninComponent implements OnInit {
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router,private auth: AuthenticationService) { }
   signinForm: FormGroup;
 
+
+  showAlert(text, type) {
+    if (type === "success") {
+      Swal.fire({
+        position: 'center',
+        type: 'success',
+        title: text,
+        showConfirmButton: false,
+        timer: 1000
+      });
+    }
+    else if (type === "error") {
+      Swal.fire({
+        position: 'center',
+        type: 'error',
+        title: text,
+        showConfirmButton: true,
+      });
+    }
+  }
+
   login(){
     this.auth.login(this.credentials).subscribe(
       () =>{
-        
+        this.showAlert("Successful!", "success")
+
       },
       err =>{
+        this.showAlert("Failed!", "error")
         console.log(err)
       }
     )

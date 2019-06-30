@@ -1,6 +1,6 @@
 {
     "/user":{
-        "target": "http://localhost:8000",
+        "target": "http://nodeserver.hopto.org",
         "secure": false
     }
 }
