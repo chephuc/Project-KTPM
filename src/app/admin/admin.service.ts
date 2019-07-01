@@ -4,6 +4,7 @@ import { Observable} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { Product, Type, Detail, Size } from '../home-page/product/product';
+import { User, Order } from '../admin/admin-user/User'
 import { Category } from '../navbar/category'
 import { UploadEntity } from '../upload-entity';
 
@@ -60,6 +61,15 @@ export class AdminService {
     //SIZE
     public getAllSize(): Observable<Size[]>{
       return this.http.get<Size[]>('http://nodeserver.hopto.org/api/size/all');
+    }
+
+    //USER
+    public getUser(): Observable<User[]>{
+      return this.http.get<User[]>('http://nodeserver.hopto.org/api/getusers');
+    }
+    //ORDER
+    public getOrder(): Observable<Order[]>{
+      return this.http.get<Order[]>('http://nodeserver.hopto.org/api/getorders');
     }
     public uploadAvatarImage(file : FormData) : Observable<UploadEntity>{
       return this.http.post<UploadEntity>(`http://nodeserver.hopto.org/upload`,file);

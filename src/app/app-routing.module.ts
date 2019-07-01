@@ -17,6 +17,8 @@ import { AdminComponent } from './admin/admin.component';
 import { AdminShoesComponent } from './admin/admin-shoes/admin-shoes.component';
 import { AdminTypeComponent } from './admin/admin-type/admin-type.component';
 import { AdminSizeComponent } from './admin/admin-size/admin-size.component';
+import { AdminUserComponent } from './admin/admin-user/admin-user.component';
+import { AdminOrderComponent } from './admin/admin-order/admin-order.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/homepage' },
@@ -37,6 +39,8 @@ const routes: Routes = [
   { path: 'adminshoes',component:AdminShoesComponent},
   { path: 'admintype',component:AdminTypeComponent},
   { path: 'adminsize',component: AdminSizeComponent},
+  { path: 'adminuser',component: AdminUserComponent},
+  { path: 'adminorder',component: AdminOrderComponent},
   // { path: 'binding', component: DemoBindingComponent, canActivate:[AuthGuard]},
   { path: '**', pathMatch: 'full', redirectTo: '/homepage' }
 ];

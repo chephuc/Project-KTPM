@@ -11,6 +11,10 @@ import { AdminTypeComponent } from './admin-type/admin-type.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AdminSizeComponent } from './admin-size/admin-size.component';
 import { StringFilterPipe } from './admin-size/string-filter.pipe';
+import { AdminUserComponent } from './admin-user/admin-user.component';
+import { AdminOrderComponent } from './admin-order/admin-order.component';
+import { StringFilterOrderPipe } from './admin-order/string-filter-order.pipe';
+import { StringFilterUserPipe } from './admin-user/string-filter-user.pipe';
 
 const routes: Routes = [
 
@@ -24,7 +28,11 @@ const routes: Routes = [
     StringfilterPipe,
     AdminTypeComponent,
     AdminSizeComponent,
-    StringFilterPipe
+    StringFilterPipe,
+    AdminUserComponent,
+    AdminOrderComponent,
+    StringFilterOrderPipe,
+    StringFilterUserPipe
   ],
   imports: [
     CommonModule,

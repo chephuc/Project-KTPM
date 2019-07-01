@@ -1,0 +1,31 @@
+<app-admin-navbar></app-admin-navbar>
+<div class="container mt-2">
+    <div class="content">
+        <form class="form-inline">
+            <input [(ngModel)]="search" type="text" class="form-control ml-auto mr-2" placeholder="Search" name="search">
+            <button type="button" class="btn btn-dark mb-3" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </form>
+        <div class="row mt-1 border pt-2 pb-2 ml-2 mr-2" *ngFor="let user of userList | stringFilterUser: search | paginate: { itemsPerPage:12, currentPage: p }">
+            <div class="text-sm-center col-sm-5 text-md-left ">
+                <h6>Username: {{user.UsersName}}</h6>
+                <h6>Email: {{user.UsersEmail}}</h6>
+            </div>
+            <div class="text-sm-center col-sm-5 text-md-left ">
+                <h6>Address: {{user.UsersAddress}}</h6>
+                <h6>Phone: {{user.UsersPhoneNum}}</h6>
+            </div>
+            <div class="text-sm-center col-sm-2 text-md-left">
+              <h6>Permission: {{user.UsersPermission}}</h6>
+            </div>
+            <!-- <div class="col-sm-2 text-sm-center text-md-right">
+                <button type="button" class="btn btn-outline-info btn-xs mr-2" (click)=pushDataToForm(type) data-toggle="modal" data-target="#myModal">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-xs ml-auto">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+            </div> -->
+        </div>
+        <pagination-controls (pageChange)="p =$event" class="my-pagination text-center"></pagination-controls>
+    </div>
+</div>
